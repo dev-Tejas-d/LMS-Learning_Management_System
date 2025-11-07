@@ -1,0 +1,1 @@
+import userSchema from "./user.model.js";
