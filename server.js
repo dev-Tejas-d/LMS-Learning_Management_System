@@ -12,10 +12,10 @@ import cors from "cors"
 let server = express();
 
 
-server.use(cors({
-  origin: "https://lms-frontend-psi-indol.vercel.app",
-  credentials: true
-}));
+// server.use(cors({
+//   origin: "https://lms-frontend-psi-indol.vercel.app",
+//   credentials: true
+// }));
 
 server.use(cors());
 

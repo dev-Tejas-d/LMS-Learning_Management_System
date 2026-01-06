@@ -43,7 +43,7 @@ export default class CourseController{
             }
             let result = await this.courseRepo.getAllCoruse(filter);
                     if(!result){
-                        return res.status(400).send("No course right now")
+                        return res.status(400).send([]);
                     }
                     res.status(201).send(result);
 
@@ -57,7 +57,7 @@ export default class CourseController{
         let id = req.params.id;
         let result = await this.courseRepo.getCourse(id);
         if(!result){
-            return res.status(400).send("Course not found");
+            return res.status(400).send({});
         }
         res.status(201).send(result);
     }

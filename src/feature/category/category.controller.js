@@ -23,7 +23,7 @@ export default class CategoryController{
         try{
             let result = await this.categoryRepo.getCategory();
             if(!result){
-                return res.status(400).send("No category")
+                return res.status(400).send([])
             }
 
             return res.status(200).send(result);
