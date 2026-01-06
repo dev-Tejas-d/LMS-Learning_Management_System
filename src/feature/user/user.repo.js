@@ -32,7 +32,7 @@ export default class UserRepository{
             if(!checkPass){
                 return {result:false, message:"Please enter valid password"};
             }
-            return {result:true};
+            return {result:user};
         }
         catch(error){
             console.log(error)

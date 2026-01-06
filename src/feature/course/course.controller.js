@@ -7,6 +7,7 @@ export default class CourseController{
 
     async addCourse(req, res){
         let courseData = req.body;
+        courseData.instructor = req.userId
         let result = await this.courseRepo.addCourse(courseData);
         if(!result){
             return res.status(400).send("Unable to create course!")
@@ -15,11 +16,41 @@ export default class CourseController{
     }
 
     async getAllCourse(req, res){
-        let result = await this.courseRepo.getAllCoruse();
-         if(!result){
-            return res.status(400).send("No course right now")
+        try{
+            const {minPrice, maxPrice, category, title} = req.query;
+            let filter = {};
+
+            if(minPrice || maxPrice){
+                filter.price = {};
+                if(minPrice){
+                    filter.price.$gte = Number(minPrice);
+                }
+                if(maxPrice){
+                    filter.price.$lte = Number(maxPrice);
+                }
+            }
+
+            if(title){
+                // filter.name = {$regex: title, $options:"i"};
+                filter.name = {};
+
+                filter.name.$regex = title;
+                filter.name.$options = "i";
+            }
+            if (category) {
+                const categoryArray = category.split(",");
+                filter.category = { $in: categoryArray };
+            }
+            let result = await this.courseRepo.getAllCoruse(filter);
+                    if(!result){
+                        return res.status(400).send("No course right now")
+                    }
+                    res.status(201).send(result);
+
+        }catch(error){
+            console.log(error)
         }
-        res.status(201).send(result);
+        
     }
 
     async getCourse(req, res){

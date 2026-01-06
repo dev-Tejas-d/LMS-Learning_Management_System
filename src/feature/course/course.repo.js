@@ -11,13 +11,29 @@ export default class CourseRepository{
         return newCourse;
     }
 
-    async getAllCoruse(){
-        let result = await courseModel.find();
-        return result;
+    async getAllCoruse(filter){
+        try{
+            let result = await courseModel.find(filter).populate({
+                path:"instructor",
+                select:"_id name email"}).populate({
+                    path:"category",
+                    select:"name"
+                });
+            return result;
+        }catch(error){
+            console.log(error);
+        }
+        
     }
 
     async getCourse(courseId){
-        let course = await courseModel.findById(courseId);
+        let course = await courseModel.findById(courseId).populate({
+            path:"instructor",
+            select:"_id name email"
+        }).populate({
+            path:"category",
+            select:"name"
+        });;
         return course;
     }
 
