@@ -2,6 +2,8 @@ import express from "express";
 import connectToDB from "./src/config/connectDB.js";
 import userRouter from "./src/feature/user/user.routes.js";
 import courseRouter from "./src/feature/course/course.routes.js";
+import dotenv from "dotenv";
+dotenv.config();
 import categoryRouter from "./src/feature/category/category.routes.js";
 import paymentRouter from "./src/feature/payment/payment.routes.js";
 import cors from "cors"
