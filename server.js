@@ -13,10 +13,12 @@ let server = express();
 server.use(express.json());
 
 
-server.use(cors({
-  origin: "https://lms-frontend-psi-indol.vercel.app",
-  credentials: true
-}));
+// server.use(cors({
+//   origin: "https://lms-frontend-psi-indol.vercel.app",
+//   credentials: true
+// }));
+
+server.use(cors());
 
 
 
