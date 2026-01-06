@@ -19,17 +19,14 @@ export default class CategoryController{
         }
     }
 
-    async getCategory(req, res){
-        try{
-            let result = await this.categoryRepo.getCategory();
-            if(!result){
-                return res.status(400).send([])
-            }
-
-            return res.status(200).send(result);
-        }
-        catch(error){
-            console.log(error);
+    async getCategory(req, res) {
+        try {
+            const result = await this.categoryRepo.getCategory();
+            return res.status(200).json(Array.isArray(result) ? result : []);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json([]);
         }
     }
+
 }

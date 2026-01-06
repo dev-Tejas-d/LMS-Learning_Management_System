@@ -15,52 +15,57 @@ export default class CourseController{
         res.status(201).json("Course created successfully!")
     }
 
-    async getAllCourse(req, res){
-        try{
-            const {minPrice, maxPrice, category, title} = req.query;
-            let filter = {};
+    async getAllCourse(req, res) {
+  try {
+    const { minPrice, maxPrice, category, title } = req.query;
+    let filter = {};
 
-            if(minPrice || maxPrice){
-                filter.price = {};
-                if(minPrice){
-                    filter.price.$gte = Number(minPrice);
-                }
-                if(maxPrice){
-                    filter.price.$lte = Number(maxPrice);
-                }
-            }
-
-            if(title){
-                // filter.name = {$regex: title, $options:"i"};
-                filter.name = {};
-
-                filter.name.$regex = title;
-                filter.name.$options = "i";
-            }
-            if (category) {
-                const categoryArray = category.split(",");
-                filter.category = { $in: categoryArray };
-            }
-            let result = await this.courseRepo.getAllCoruse(filter);
-                    if(!result){
-                        return res.status(400).send([]);
-                    }
-                    res.status(201).send(result);
-
-        }catch(error){
-            console.log(error)
-        }
-        
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
     }
 
-    async getCourse(req, res){
-        let id = req.params.id;
-        let result = await this.courseRepo.getCourse(id);
-        if(!result){
-            return res.status(400).send({});
-        }
-        res.status(201).send(result);
+
+    if (typeof title === "string" && title.trim() !== "") {
+      filter.name = {
+        $regex: title.trim(),
+        $options: "i"
+      };
     }
+
+    if (typeof category === "string" && category.trim() !== "") {
+      filter.category = { $in: category.split(",") };
+    }
+
+    const result = await this.courseRepo.getAllCoruse(filter);
+
+    return res.status(200).json(Array.isArray(result) ? result : []);
+
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json([]);
+  }
+}
+
+
+async getCourse(req, res) {
+    try {
+        const id = req.params.id;
+        const result = await this.courseRepo.getCourse(id);
+
+        if (!result) {
+        return res.status(404).json(null);
+        }
+
+        return res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json(null);
+    }
+}
+
 
     async deleteCourse(req, res){
         let id = req.params.id;
