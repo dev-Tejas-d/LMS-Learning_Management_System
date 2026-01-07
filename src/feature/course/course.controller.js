@@ -55,7 +55,7 @@ async getCourse(req, res) {
         const result = await this.courseRepo.getCourse(id);
 
         if (!result) {
-        return res.status(404).json(null);
+        return res.status(404).json({});
         }
 
         return res.status(200).json(result);
