@@ -18,8 +18,7 @@ let server = express();
 // }));
 
 server.use(cors());
-
-
+server.use(express.json());
 
 server.use("/api/user", userRouter);
 server.use("/api/course", courseRouter);

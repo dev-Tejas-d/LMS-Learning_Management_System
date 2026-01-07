@@ -28,7 +28,7 @@ export default class UserController{
             let userCred = req.body;
             let result = await this.userRepository.login(userCred);
             if(!result.result){
-                return res.status(404).send(`${result.message}`);
+                return res.status(404).json(`${result.message}`);
             }
             let token = jwt.sign({userRole:result.result.role, userName:result.result.name, userId:result.result._id},process.env.JWT_KEY, {expiresIn:"1h"})
             return res.status(200).json({Token: token});

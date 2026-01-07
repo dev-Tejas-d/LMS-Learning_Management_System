@@ -17,7 +17,7 @@ export default class PaymentController{
                 amount:amount*100,
                 currency:'inr'
             })
-
+            
             res.send(paymentIntent.client_secret);
         }catch(error){
             console.log(error)
