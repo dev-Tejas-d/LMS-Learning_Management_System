@@ -5,12 +5,12 @@ let userRouter = express.Router();
 let userController = new UserController();
 
 
-userRouter.post("/registration", (req, res)=>{
-    userController.registration(req, res);
+userRouter.post("/registration", (req, res, next)=>{
+    userController.registration(req, res, next);
 })
 
-userRouter.post("/login", (req, res)=>{
-    userController.login(req, res);
+userRouter.post("/login", (req, res, next)=>{
+    userController.login(req, res, next);
 })
 
 export default userRouter;

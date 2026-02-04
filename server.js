@@ -7,7 +7,7 @@ dotenv.config();
 import categoryRouter from "./src/feature/category/category.routes.js";
 import paymentRouter from "./src/feature/payment/payment.routes.js";
 import cors from "cors"
-
+import errorHandler from "./src/middleware/errorHandler.js";
 
 let server = express();
 
@@ -26,6 +26,7 @@ server.use("/api/category", categoryRouter);
 server.use("/api/payment", paymentRouter);
 
 
+server.use(errorHandler);
 
 server.listen(process.env.PORT, ()=>{
     console.log("Server on port 3002");
