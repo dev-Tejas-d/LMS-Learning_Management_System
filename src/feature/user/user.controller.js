@@ -34,10 +34,32 @@ export default class UserController{
                     expiresIn:"1h"
                 }
             )
-            return res.status(200).json({token});
+            return res.status(200).json({token, profilePicture:result.profilePicture});
         }
         catch(error){
             next(error)
         }
     }
+
+    async getUser(req, res, next){
+        try{
+            let id =  req.userId;
+            let result = await this.userRepository.getUser(id);
+            return res.status(200).json({user:result});
+        }catch(error){
+            next(error)
+        }
+    }
+
+    async userUpdate(req, res, next){
+        try{
+            let id =  req.userId;
+            let data = req.body;
+
+            let result = await this.userRepository.updateUser(id, data);
+            return result;
+        }catch(error){
+            next(error);
+        }
+    }   
 }

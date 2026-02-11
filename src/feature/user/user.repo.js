@@ -30,4 +30,18 @@ export default class UserRepository{
             }
             return user;
     }
+
+    async getUser(id){
+        let userById = await userModel.findById(id);
+        if(!userById){
+            throw new AppError("User does not exits!");
+        }
+        return userById;
+    }
+
+    async updateUser(id, data){
+        let userById = await userModel.findByIdAndUpdate(id, data);
+        return userById;
+    }
+
 }
