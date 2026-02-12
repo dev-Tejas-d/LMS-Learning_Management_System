@@ -12,13 +12,22 @@ export default class PaymentController{
         try{
             let id = req.params.id;
             let result = await this.courseRepo.getCourse(id)
+
             let amount = result.price;
             let paymentIntent = await stripe.paymentIntents.create({
                 amount:amount*100,
                 currency:'inr'
             })
             
-            res.send(paymentIntent.client_secret);
+            res.json({
+                clientSecret: paymentIntent.client_secret,
+                course: {
+                title: result.name,
+                price: result.price
+            }
+            }
+                
+            );
         }catch(error){
             console.log(error)
         }
