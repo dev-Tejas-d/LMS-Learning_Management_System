@@ -23,7 +23,8 @@ export default class PaymentController{
                 clientSecret: paymentIntent.client_secret,
                 course: {
                 title: result.name,
-                price: result.price
+                price: result.price,
+                id: result.id
             }
             }
                 
